@@ -98,7 +98,7 @@ make clean && make APP=blink
 First we must [attach a debugger](https://bangcorrupt.github.io/freetribe-docs/debugging) and start a GDB server.  Then we can connect to the GDB server and run the application:
 
 ```
-arm-none-eabi-gdb
+cd cpu && arm-none-eabi-gdb
 ```
 
 The commands in `freetribe/cpu/.gdbinit` should load the application and set a breakpoint at `main`.
