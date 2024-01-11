@@ -23,7 +23,8 @@ t_status app_init(void) {
     ft_register_panel_callback(KNOB_EVENT, _knob_callback);
     ft_register_panel_callback(BUTTON_EVENT, _button_callback);
     
-    return SUCCESS;
+    status =  SUCCESS;
+    return status
 }
 ```
 ## Define Run Behaviour
@@ -136,7 +137,6 @@ t_status app_init(void) {
     ft_register_panel_callback(BUTTON_EVENT, _button_callback);
 
     status = SUCCESS;
-
     return status;
 }
 

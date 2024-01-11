@@ -49,7 +49,8 @@ t_status app_init(void) {
     // Set start time.
     g_start_time = ft_get_delay_current();
 
-    return SUCCESS;
+    status =  SUCCESS;
+    return status
 }
 ```
 
@@ -127,7 +128,8 @@ t_status app_init(void) {
     // Set start time.
     g_start_time = ft_get_delay_current();
 
-    return SUCCESS;
+    status =  SUCCESS;
+    return status
 }
 
 void app_run(void) {
