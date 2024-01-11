@@ -741,7 +741,7 @@ We pass the name of our application directory (not the path) in the <code>APP</c
 </span></code></pre></div>
 <h2 id="run-the-application">Run the Application</h2>
 <p>First we must <a href="https://bangcorrupt.github.io/freetribe-docs/debugging">attach a debugger</a> and start a GDB server.  Then we can connect to the GDB server and run the application:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>arm-none-eabi-gdb
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>cd cpu &amp;&amp; arm-none-eabi-gdb
 </span></code></pre></div>
 <p>The commands in <code>freetribe/cpu/.gdbinit</code> should load the application and set a breakpoint at <code>main</code>.
 Once we hit the breakpoint, input <code>c</code> and press <code>Enter</code> to continue.  The LED on the <code>[Tap]</code> button should
