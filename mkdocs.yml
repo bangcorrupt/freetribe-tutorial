@@ -8,6 +8,7 @@ nav:
   - index.md
   - Examples:
     - "00: Essential Functions": essential-functions.md
+    - "01: Registering Callbacks": registering-callbacks.md
   - support.md
   - license.md
 
