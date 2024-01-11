@@ -55,7 +55,8 @@ void app_run(void) {
 ## Define Tick Callback
 
 In our tick callback, we count the number of ticks and set a flag each time we reach 1000.
-We test and clear this flag in the `app_run()` function, toggling the LED once per second.
+We test and clear this flag in the `app_run()` function, toggling the LED once per second. 
+The tick callback takes no arguments and returns nothing.  It is important that the function prototype matches this form, as defined in the Freetribe API.
 
 
 ``` c
@@ -107,7 +108,7 @@ If all is well, you should see the `[Tap]` LED toggle once per second.
 /*----- Macros and Definitions ---------------------------------------*/
 
 #define USER_TICK_DIV 0   // User tick for every systick (~1ms).
-#define LED_TICK_DIV 1000 // Debug tick per 1000 user ticks (~1s).
+#define LED_TICK_DIV 1000 // LED tick per 1000 user ticks (~1s).
 
 /*----- Static variable definitions ----------------------------------*/
 
