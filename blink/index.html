@@ -614,7 +614,7 @@
 We demonstrate the essential functions for Freetribe applications, use a non-blocking delay, and toggle an LED.</p>
 <h2 id="create-application-files">Create Application Files</h2>
 <p>Create a directory for the app and a file for the code.  The app directory must
-be under the <code>freetribe/cpu/apps/</code> directory in order for the build system to work.</p>
+be under the <code>freetribe/cpu/apps/</code> directory for the build system to work.</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>mkdir cpu/src/apps/blink
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>touch cpu/src/apps/blink.c
 </span></code></pre></div>
@@ -626,7 +626,7 @@ be under the <code>freetribe/cpu/apps/</code> directory in order for the build s
 application should need for interacting with the device.</p>
 <h2 id="override-initialisation-function">Override Initialisation Function</h2>
 <p>The function <code>app_init()</code> is defined as a weak reference in the Freetribe API.
-We override it in order to do any one time initialisation required by our app. 
+We override it to do any one time initialisation required by our app. 
 This is a good place to register callbacks for events we are interested in, 
 and do any initialisation required by external libraries.</p>
 <p>In this example, we initialise a static global variable to hold the start time of our delay. 
@@ -647,7 +647,7 @@ The <code>app_init()</code> function takes no arguments and returns <code>t_stat
 </span></code></pre></div>
 <h2 id="override-run-function">Override Run Function</h2>
 <p>The <code>app_run()</code> function is also defined as a  weak reference in the Freetribe API. 
-We override it in order to do any continuous processing required by our app.
+We override it to do any continuous processing required by our app.
 In this example, we toggle an LED on the panel if 1 second has passed, 
 and reset the delay start time. </p>
 <p>The <code>app_run</code> function takes no arguments and returns nothing.</p>
