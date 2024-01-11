@@ -1,0 +1,60 @@
+site_name: Freetribe Tutorial
+site_url: https://bangcorrupt.github.io/freetribe-tutorial
+site_description: Tutorial for Freetribe, a free, open-source firmware for Electribe 2.
+repo_url: https://github.com/bangcorrupt/freetribe-tutorial
+repo_name: bangcorrupt/freetribe-tutorial
+
+nav:
+  - index.md
+  - Examples:
+    - "00: Blink": blink.md
+  - support.md
+  - license.md
+
+plugins:
+  - search
+
+theme:
+  name: material
+
+  features:
+    - search.suggest
+    - search.highlight
+
+    - navigation.instant
+    - navigation.instant.prefetch
+    - navigation.instant.progress
+    - navigation.tracking
+    - navigation.top
+    - navigation.footer
+    - navigation.indexes
+    - toc.follow
+
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: slate
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/bangcorrupt
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+
+
+copyright: Freetribe Documentation &copy; 2024 by bangcorrupt is licensed under CC BY-NC-SA 4.0
