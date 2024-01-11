@@ -10,7 +10,7 @@
       
       
       
-        <link rel="canonical" href="https://bangcorrupt.github.io/freetribe-tutorial/blink/">
+        <link rel="canonical" href="https://bangcorrupt.github.io/freetribe-tutorial/essential-functions/">
       
       
         <link rel="prev" href="..">
@@ -24,7 +24,7 @@
     
     
       
-        <title>00: Blink - Freetribe Tutorial</title>
+        <title>00: Essential Functions - Freetribe Tutorial</title>
       
     
     
@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#blink" class="md-skip">
+        <a href="#essential-functions" class="md-skip">
           Skip to content
         </a>
       
@@ -112,7 +112,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              00: Blink
+              00: Essential Functions
             
           </span>
         </div>
@@ -333,7 +333,7 @@
           
   
   <span class="md-ellipsis">
-    00: Blink
+    00: Essential Functions
   </span>
   
 
@@ -344,7 +344,7 @@
         
   
   <span class="md-ellipsis">
-    00: Blink
+    00: Essential Functions
   </span>
   
 
@@ -609,7 +609,7 @@
   
 
 
-<h1 id="blink">Blink</h1>
+<h1 id="essential-functions">Essential Functions</h1>
 <p>This minimal example is reproduced from the <a href="https://bangcorrupt.github.io/freetribe-docs/getting-started">Getting Started</a> section of the <a href="https://bangcorrupt.github.io/freetribe-docs/">Freetribe Documentation</a>.
 We demonstrate the essential functions for Freetribe applications, use a non-blocking delay, and toggle an LED.</p>
 <h2 id="create-application-files">Create Application Files</h2>
@@ -628,7 +628,7 @@ application should need for interacting with the device.</p>
 <p>The function <code>app_init()</code> is defined as a weak reference in the Freetribe API.
 We override it to do any one time initialisation required by our app. 
 This is a good place to register callbacks for events we are interested in, 
-and do any initialisation required by external libraries.</p>
+and do any setup required by external libraries.</p>
 <p>In this example, we initialise a static global variable to hold the start time of our delay. 
 The <code>app_init()</code> function takes no arguments and returns <code>t_status</code>, an integer error code.</p>
 <p>We also define a macro <code>DELAY_TIME</code> as the number of microseconds in 1 second.</p>
