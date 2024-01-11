@@ -31,7 +31,7 @@ application should need for interacting with the device.
 The function `app_init()` is defined as a weak reference in the Freetribe API.
 We override it to do any one time initialisation required by our app. 
 This is a good place to register callbacks for events we are interested in, 
-and do any initialisation required by external libraries.
+and do any setup required by external libraries.
 
 In this example, we initialise a static global variable to hold the start time of our delay. 
 The `app_init()` function takes no arguments and returns `t_status`, an integer error code.
