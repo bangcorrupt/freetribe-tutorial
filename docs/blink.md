@@ -7,7 +7,7 @@ We demonstrate the essential functions for Freetribe applications, use a non-blo
 ## Create Application Files
 
 Create a directory for the app and a file for the code.  The app directory must
-be under the `freetribe/cpu/apps/` directory in order for the build system to work.
+be under the `freetribe/cpu/apps/` directory for the build system to work.
 
 ```
 mkdir cpu/src/apps/blink
@@ -29,7 +29,7 @@ application should need for interacting with the device.
 ## Override Initialisation Function 
 
 The function `app_init()` is defined as a weak reference in the Freetribe API.
-We override it in order to do any one time initialisation required by our app. 
+We override it to do any one time initialisation required by our app. 
 This is a good place to register callbacks for events we are interested in, 
 and do any initialisation required by external libraries.
 
@@ -56,7 +56,7 @@ t_status app_init(void) {
 ## Override Run Function
 
 The `app_run()` function is also defined as a  weak reference in the Freetribe API. 
-We override it in order to do any continuous processing required by our app.
+We override it to do any continuous processing required by our app.
 In this example, we toggle an LED on the panel if 1 second has passed, 
 and reset the delay start time. 
 
