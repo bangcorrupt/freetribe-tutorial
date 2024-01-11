@@ -7,7 +7,7 @@ repo_name: bangcorrupt/freetribe-tutorial
 nav:
   - index.md
   - Examples:
-    - "00: Blink": blink.md
+    - "00: Essential Functions": essential-functions.md
   - support.md
   - license.md
 
