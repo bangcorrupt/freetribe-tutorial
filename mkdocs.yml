@@ -9,6 +9,7 @@ nav:
   - Examples:
     - "00: Essential Functions": essential-functions.md
     - "01: Registering Callbacks": registering-callbacks.md
+    - "02: User Input": user-input.md
   - support.md
   - license.md
 

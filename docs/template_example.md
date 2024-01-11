@@ -9,7 +9,9 @@ cp template_app.c cpu/src/apps/blink-tick/blink-tick.c
 
 ## Initialise Application  
 
-In the `app_init()` function ``` c
+In the `app_init()` function 
+
+``` c
 t_status app_init(void) {
     
     t_status status = ERROR;
@@ -30,6 +32,7 @@ void app_run(void) {
 ## Define Callback
 
 In our callback, 
+
 ``` c
 static void _callback(void) {
 
