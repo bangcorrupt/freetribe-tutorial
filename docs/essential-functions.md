@@ -7,7 +7,7 @@ We demonstrate the essential functions for Freetribe applications, use a non-blo
 ## Create Application Files
 
 Create a directory for the app and a file for the code.  The app directory must
-be under the `freetribe/cpu/apps/` directory for the build system to work.
+be under the `freetribe/cpu/src/apps/` directory for the build system to work.
 
 ```
 mkdir cpu/src/apps/blink
