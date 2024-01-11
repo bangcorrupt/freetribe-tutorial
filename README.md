@@ -1,2 +1,2 @@
 # freetribe-tutorial
-Tutotorial for Freetribe.
+Tutorial for Freetribe.
