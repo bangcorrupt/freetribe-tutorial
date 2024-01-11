@@ -65,7 +65,7 @@ void _knob_callback(uint8_t index, uint8_t value) {
 The button callback prototype is similar to the knob callback.
 It takes 2 arguments, button index and button state, and returns nothing.
 In this example, we parse the button index and test the button state. 
-When the `[Play]` button is depressed we toggle it's LED. 
+When the `[Play]` button is depressed we set a flag to toggle it's LED. 
 We ignore when the `[Play]` button is released.
 
 ``` c
@@ -104,7 +104,7 @@ Pressing the `[Play]` button should toggle it's LED.
 
 ## Things to Try
 
-Try remapping the CC index to something other than the knob index.
+Try remapping the CC number to something other than the knob index.
 
 Try sending CC messages for button events.
 
