@@ -1,6 +1,6 @@
 # User Input
 
-In the [previous example](registering-callbacks.md) we regiseterd a callback for tick events.
+In the [previous example](registering-callbacks.md) we regisetered a callback for tick events.
 In this example, we will register callbacks for knob and button input, 
 then use them to send MIDI CC messages and toggle an LED. 
 
