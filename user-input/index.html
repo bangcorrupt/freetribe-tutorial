@@ -676,15 +676,18 @@ in our button callback below. In this example, we toggle the <code>[Play]</code>
 of the knob and the second is it's value.  In this example, we send a MIDI CC message
 on channel 1, with CC number equal to knob index and CC value equal to half knob value.
 The panel MCU sends 8 bit unsigned values in the range 0...255 for knobs, so we right shift 
-by 1 for MIDI CC values.  We could save the knob index and value to a static global variable
-and send MIDI messages in the <code>app_run()</code> function, but as the <code>ft_send_cc()</code> function is 
-non-blocking there is little advantage in this small application.</p>
+by 1 for MIDI CC values.<br />
 <div class="language-c highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">_knob_callback</span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">index</span><span class="p">,</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">value</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span><span class="n">ft_send_cc</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">index</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
 </span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="p">}</span>
-</span></code></pre></div>
+</span></code></pre></div></p>
 <h2 id="define-button-callback">Define Button Callback</h2>
+<p>The button callback prototype is similar to the knob callback.
+It takes 2 arguments, button index and button state, and returns nothing.
+In this example, we parse the button index and test the button state. 
+When the <code>[Play]</code> button is depressed we toggle it's LED. 
+We ignore when the <code>[Play]</code> button is released.</p>
 <div class="language-c highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">_button_callback</span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">index</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">state</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span><span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="n">index</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
