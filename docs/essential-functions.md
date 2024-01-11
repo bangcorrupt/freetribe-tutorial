@@ -105,15 +105,24 @@ The commands in `freetribe/cpu/.gdbinit` should load the application and set a b
 Once we hit the breakpoint, input `c` and press `Enter` to continue.  The LED on the `[Tap]` button should
 blink at a rate of 1 Hz.
 
+## Things to Try
+
+Try modifying the LED blink rate by passing different values to `ft_delay()`.
+
+Try toggling a different LED by passing different values to `ft_toggle_led()`.
+
+Try toggling multiple LEDs at different rates.  It may help to use separate `start_time`
+variables for each LED.
+
 ## Next Steps
 
-In the next example, we will register a callback for user tick events, 
-providing a synchronised sense of time to our application.
+In the [next example](registering-callbacks.md), we will register a callback for user tick events, 
+providing a regular sense of time to our application.
 
 ## `blink.c`
 
 ``` c
-// Freetribe: Minimal Example
+// Freetribe: blink
 // License: AGPL-3.0-or-later
 
 #include "freetribe.h"

@@ -96,6 +96,17 @@ attaching to the debugger's GDB server and loading the ELF.
 
 If all is well, you should see the `[Tap]` LED toggle once per second.
 
+## Things to Try
+
+Repeat the tasks from the [previous example](essential-functions.md), toggling different LEDs
+at different rates.  It may help to use separate timeout values in 
+the tick callback.
+
+## Next Steps
+
+In the [next example](user-input.md), we will register callbacks for user input and
+use them to provide feedback.
+
 ## `blink-tick.c`
 
 ``` c

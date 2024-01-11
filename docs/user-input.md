@@ -102,6 +102,18 @@ attaching to the debugger's GDB server and loading the ELF.
 If all is well, moving any of the knobs should send MIDI CC messages.
 Pressing the `[Play]` button should toggle it's LED.
 
+## Things to Try
+
+Try remapping the CC index to something other than the knob index.
+
+Try sending CC messages for button events.
+
+Try sending note messages for trigger pad input.
+
+## Next Steps
+
+In the next tutorial, we will integrate an external library for GUI management.
+
 ## `midi-knob.c`
 
 ``` c
