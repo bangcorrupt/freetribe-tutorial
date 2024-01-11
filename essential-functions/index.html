@@ -677,7 +677,7 @@
 <p>This minimal example is reproduced from the <a href="https://bangcorrupt.github.io/freetribe-docs/getting-started">Getting Started</a> section of the <a href="https://bangcorrupt.github.io/freetribe-docs/">Freetribe Documentation</a>.
 We demonstrate the essential functions for Freetribe applications, use a non-blocking delay, and toggle an LED.</p>
 <h2 id="create-application-files">Create Application Files</h2>
-<p>Create a directory for the app and a file for the code.  The app directory must
+<p>Create a directory for the app and a file for the code. The app directory must
 be under the <code>freetribe/cpu/src/apps/</code> directory for the build system to work.</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>mkdir cpu/src/apps/blink
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>touch cpu/src/apps/blink.c
@@ -686,35 +686,34 @@ be under the <code>freetribe/cpu/src/apps/</code> directory for the build system
 <p>First, we must include the Freetribe API:</p>
 <div class="language-c highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;freetribe.h&quot;</span>
 </span></code></pre></div>
-<p>This gives us access to all the functions our 
+<p>This gives us access to all the functions our
 application should need for interacting with the device.</p>
 <h2 id="override-initialisation-function">Override Initialisation Function</h2>
 <p>The function <code>app_init()</code> is defined as a weak reference in the Freetribe API.
-We override it to do any one time initialisation required by our app. 
-This is a good place to register callbacks for events we are interested in, 
+We override it to do any one time initialisation required by our app.
+This is a good place to register callbacks for events we are interested in,
 and do any setup required by external libraries.</p>
-<p>In this example, we initialise a static global variable to hold the start time of our delay. 
+<p>In this example, we initialise a static global variable to hold the start time of our delay.
 The <code>app_init()</code> function takes no arguments and returns <code>t_status</code>, an integer error code.</p>
 <p>We also define a macro <code>DELAY_TIME</code> as the number of microseconds in 1 second.</p>
 <div class="language-c highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1">// 1 second in microseconds.</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="cp">#define DELAY_TIME 1000000 </span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="cp">#define DELAY_TIME 1000000</span>
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="k">static</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">g_start_time</span><span class="p">;</span><span class="w"> </span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="k">static</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">g_start_time</span><span class="p">;</span>
 </span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>
 </span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="n">t_status</span><span class="w"> </span><span class="nf">app_init</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 </span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>
 </span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">    </span><span class="c1">// Set start time.</span>
 </span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">    </span><span class="n">g_start_time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ft_get_delay_current</span><span class="p">();</span>
 </span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>
-</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="w">    </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="n">SUCCESS</span><span class="p">;</span>
-</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">status</span>
-</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="p">}</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">SUCCESS</span><span class="p">;</span>
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="p">}</span>
 </span></code></pre></div>
 <h2 id="override-run-function">Override Run Function</h2>
-<p>The <code>app_run()</code> function is also defined as a  weak reference in the Freetribe API. 
+<p>The <code>app_run()</code> function is also defined as a weak reference in the Freetribe API.
 We override it to do any continuous processing required by our app.
-In this example, we toggle an LED on the panel if 1 second has passed, 
-and reset the delay start time. </p>
+In this example, we toggle an LED on the panel if 1 second has passed,
+and reset the delay start time.</p>
 <p>The <code>app_run</code> function takes no arguments and returns nothing.</p>
 <div class="language-c highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">app_run</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
@@ -732,7 +731,7 @@ and reset the delay start time. </p>
 </span></code></pre></div>
 <p>Each time the <code>app_run()</code> function is executed, we test the return value of <code>ft_delay()</code>.
 The function <code>ft_delay()</code> returns <code>true</code> if <code>delay_time</code> microseconds have passed since <code>start_time</code>.
-Once we enter the <code>if(...)</code> block, we toggle an LED and reset the start time 
+Once we enter the <code>if(...)</code> block, we toggle an LED and reset the start time
 to the current value of the delay timer.</p>
 <h2 id="build-the-application">Build the Application</h2>
 <p>We build the application by running <code>make</code> in the root <code>freetribe</code> directory.
@@ -740,19 +739,19 @@ We pass the name of our application directory (not the path) in the <code>APP</c
 <div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>make clean &amp;&amp; make APP=blink
 </span></code></pre></div>
 <h2 id="run-the-application">Run the Application</h2>
-<p>First we must <a href="https://bangcorrupt.github.io/freetribe-docs/debugging">attach a debugger</a> and start a GDB server.  Then we can connect to the GDB server and run the application:</p>
+<p>First we must <a href="https://bangcorrupt.github.io/freetribe-docs/debugging">attach a debugger</a> and start a GDB server. Then we can connect to the GDB server and run the application:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>cd cpu &amp;&amp; arm-none-eabi-gdb
 </span></code></pre></div>
 <p>The commands in <code>freetribe/cpu/.gdbinit</code> should load the application and set a breakpoint at <code>main</code>.
-Once we hit the breakpoint, input <code>c</code> and press <code>Enter</code> to continue.  The LED on the <code>[Tap]</code> button should
+Once we hit the breakpoint, input <code>c</code> and press <code>Enter</code> to continue. The LED on the <code>[Tap]</code> button should
 blink at a rate of 1 Hz.</p>
 <h2 id="things-to-try">Things to Try</h2>
 <p>Try modifying the LED blink rate by passing different values to <code>ft_delay()</code>.</p>
 <p>Try toggling a different LED by passing different values to <code>ft_toggle_led()</code>.</p>
-<p>Try toggling multiple LEDs at different rates.  It may help to use separate <code>start_time</code>
+<p>Try toggling multiple LEDs at different rates. It may help to use separate <code>start_time</code>
 variables for each LED.</p>
 <h2 id="next-steps">Next Steps</h2>
-<p>In the <a href="../registering-callbacks/">next example</a>, we will register a callback for user tick events, 
+<p>In the <a href="../registering-callbacks/">next example</a>, we will register a callback for user tick events,
 providing a regular sense of time to our application.</p>
 <h2 id="blinkc"><code>blink.c</code></h2>
 <div class="language-c highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1">// Freetribe: blink</span>
@@ -761,32 +760,31 @@ providing a regular sense of time to our application.</p>
 </span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;freetribe.h&quot;</span>
 </span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>
 </span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="c1">// 1 second in microseconds.</span>
-</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="cp">#define DELAY_TIME 1000000 </span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="cp">#define DELAY_TIME 1000000</span>
 </span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>
-</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="k">static</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">g_start_time</span><span class="p">;</span><span class="w"> </span>
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="k">static</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">g_start_time</span><span class="p">;</span>
 </span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>
 </span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="n">t_status</span><span class="w"> </span><span class="nf">app_init</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 </span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>
 </span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="w">    </span><span class="c1">// Set start time.</span>
 </span><span id="__span-6-14"><a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a><span class="w">    </span><span class="n">g_start_time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ft_get_delay_current</span><span class="p">();</span>
 </span><span id="__span-6-15"><a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a>
-</span><span id="__span-6-16"><a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a><span class="w">    </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="n">SUCCESS</span><span class="p">;</span>
-</span><span id="__span-6-17"><a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">status</span>
-</span><span id="__span-6-18"><a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a><span class="p">}</span>
-</span><span id="__span-6-19"><a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a>
-</span><span id="__span-6-20"><a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a><span class="kt">void</span><span class="w"> </span><span class="nf">app_run</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-6-21"><a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a>
-</span><span id="__span-6-22"><a id="__codelineno-6-22" name="__codelineno-6-22" href="#__codelineno-6-22"></a><span class="w">    </span><span class="c1">// Wait for delay.</span>
-</span><span id="__span-6-23"><a id="__codelineno-6-23" name="__codelineno-6-23" href="#__codelineno-6-23"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ft_delay</span><span class="p">(</span><span class="n">g_start_time</span><span class="p">,</span><span class="w"> </span><span class="n">DELAY_TIME</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-6-24"><a id="__codelineno-6-24" name="__codelineno-6-24" href="#__codelineno-6-24"></a>
-</span><span id="__span-6-25"><a id="__codelineno-6-25" name="__codelineno-6-25" href="#__codelineno-6-25"></a><span class="w">        </span><span class="c1">// Toggle LED.</span>
-</span><span id="__span-6-26"><a id="__codelineno-6-26" name="__codelineno-6-26" href="#__codelineno-6-26"></a><span class="w">        </span><span class="n">ft_toggle_led</span><span class="p">(</span><span class="n">LED_TAP</span><span class="p">);</span>
-</span><span id="__span-6-27"><a id="__codelineno-6-27" name="__codelineno-6-27" href="#__codelineno-6-27"></a>
-</span><span id="__span-6-28"><a id="__codelineno-6-28" name="__codelineno-6-28" href="#__codelineno-6-28"></a><span class="w">        </span><span class="c1">// Reset start time.</span>
-</span><span id="__span-6-29"><a id="__codelineno-6-29" name="__codelineno-6-29" href="#__codelineno-6-29"></a><span class="w">        </span><span class="n">g_start_time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ft_get_delay_current</span><span class="p">();</span>
-</span><span id="__span-6-30"><a id="__codelineno-6-30" name="__codelineno-6-30" href="#__codelineno-6-30"></a>
-</span><span id="__span-6-31"><a id="__codelineno-6-31" name="__codelineno-6-31" href="#__codelineno-6-31"></a><span class="w">    </span><span class="p">}</span>
-</span><span id="__span-6-32"><a id="__codelineno-6-32" name="__codelineno-6-32" href="#__codelineno-6-32"></a><span class="p">}</span>
+</span><span id="__span-6-16"><a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">SUCCESS</span><span class="p">;</span>
+</span><span id="__span-6-17"><a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a><span class="p">}</span>
+</span><span id="__span-6-18"><a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a>
+</span><span id="__span-6-19"><a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a><span class="kt">void</span><span class="w"> </span><span class="nf">app_run</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-6-20"><a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a>
+</span><span id="__span-6-21"><a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a><span class="w">    </span><span class="c1">// Wait for delay.</span>
+</span><span id="__span-6-22"><a id="__codelineno-6-22" name="__codelineno-6-22" href="#__codelineno-6-22"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ft_delay</span><span class="p">(</span><span class="n">g_start_time</span><span class="p">,</span><span class="w"> </span><span class="n">DELAY_TIME</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-6-23"><a id="__codelineno-6-23" name="__codelineno-6-23" href="#__codelineno-6-23"></a>
+</span><span id="__span-6-24"><a id="__codelineno-6-24" name="__codelineno-6-24" href="#__codelineno-6-24"></a><span class="w">        </span><span class="c1">// Toggle LED.</span>
+</span><span id="__span-6-25"><a id="__codelineno-6-25" name="__codelineno-6-25" href="#__codelineno-6-25"></a><span class="w">        </span><span class="n">ft_toggle_led</span><span class="p">(</span><span class="n">LED_TAP</span><span class="p">);</span>
+</span><span id="__span-6-26"><a id="__codelineno-6-26" name="__codelineno-6-26" href="#__codelineno-6-26"></a>
+</span><span id="__span-6-27"><a id="__codelineno-6-27" name="__codelineno-6-27" href="#__codelineno-6-27"></a><span class="w">        </span><span class="c1">// Reset start time.</span>
+</span><span id="__span-6-28"><a id="__codelineno-6-28" name="__codelineno-6-28" href="#__codelineno-6-28"></a><span class="w">        </span><span class="n">g_start_time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ft_get_delay_current</span><span class="p">();</span>
+</span><span id="__span-6-29"><a id="__codelineno-6-29" name="__codelineno-6-29" href="#__codelineno-6-29"></a>
+</span><span id="__span-6-30"><a id="__codelineno-6-30" name="__codelineno-6-30" href="#__codelineno-6-30"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-6-31"><a id="__codelineno-6-31" name="__codelineno-6-31" href="#__codelineno-6-31"></a><span class="p">}</span>
 </span></code></pre></div>
 
 

@@ -722,7 +722,7 @@ by 1 for MIDI CC values.<br />
 <p>The button callback prototype is similar to the knob callback.
 It takes 2 arguments, button index and button state, and returns nothing.
 In this example, we parse the button index and test the button state. 
-When the <code>[Play]</code> button is depressed we toggle it's LED. 
+When the <code>[Play]</code> button is depressed we set a flag to toggle it's LED. 
 We ignore when the <code>[Play]</code> button is released.</p>
 <div class="language-c highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">_button_callback</span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">index</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">state</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
@@ -748,7 +748,7 @@ attaching to the debugger's GDB server and loading the ELF.</p>
 <p>If all is well, moving any of the knobs should send MIDI CC messages.
 Pressing the <code>[Play]</code> button should toggle it's LED.</p>
 <h2 id="things-to-try">Things to Try</h2>
-<p>Try remapping the CC index to something other than the knob index.</p>
+<p>Try remapping the CC number to something other than the knob index.</p>
 <p>Try sending CC messages for button events.</p>
 <p>Try sending note messages for trigger pad input.</p>
 <h2 id="next-steps">Next Steps</h2>
