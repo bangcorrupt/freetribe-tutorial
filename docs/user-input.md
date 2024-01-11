@@ -50,10 +50,7 @@ The knob callback takes 2 arguments and returns nothing.  The first argument is 
 of the knob and the second is it's value.  In this example, we send a MIDI CC message
 on channel 1, with CC number equal to knob index and CC value equal to half knob value.
 The panel MCU sends 8 bit unsigned values in the range 0...255 for knobs, so we right shift 
-by 1 for MIDI CC values.  We could save the knob index and value to a static global variable
-and send MIDI messages in the `app_run()` function, but as the `ft_send_cc()` function is 
-non-blocking there is little advantage in this small application.
-
+by 1 for MIDI CC values.  
 ``` c
 
 void _knob_callback(uint8_t index, uint8_t value) {
@@ -64,6 +61,12 @@ void _knob_callback(uint8_t index, uint8_t value) {
 ```
 
 ## Define Button Callback
+
+The button callback prototype is similar to the knob callback.
+It takes 2 arguments, button index and button state, and returns nothing.
+In this example, we parse the button index and test the button state. 
+When the `[Play]` button is depressed we toggle it's LED. 
+We ignore when the `[Play]` button is released.
 
 ``` c
 void _button_callback(uint8_t index, bool state) {
