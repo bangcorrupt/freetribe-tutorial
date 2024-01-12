@@ -675,8 +675,8 @@
 
 <h1 id="user-input">User Input</h1>
 <p>In the <a href="../registering-callbacks/">previous example</a> we registered a callback for tick events.
-In this example, we will register callbacks for knob and button input, 
-then use them to send MIDI CC messages and toggle an LED. </p>
+In this example, we will register callbacks for knob and button input,
+then use them to send MIDI CC messages and toggle an LED.</p>
 <h2 id="create-application-files">Create Application Files</h2>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>mkdir cpu/src/apps/midi-knob
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>cp template_app.c cpu/src/apps/blink-tick/midi-knob.c
@@ -696,7 +696,7 @@ then use them to send MIDI CC messages and toggle an LED. </p>
 </span></code></pre></div>
 <h2 id="define-run-behaviour">Define Run Behaviour</h2>
 <p>Our <code>app_run()</code> function is very similar to the <a href="../registering-callbacks/">previous example</a>.
-If a flag is set, we toggle an LED and clear the flag. The flag will be set 
+If a flag is set, we toggle an LED and clear the flag. The flag will be set
 in our button callback below. In this example, we toggle the <code>[Play]</code> button LED.</p>
 <div class="language-c highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">app_run</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
@@ -708,33 +708,37 @@ in our button callback below. In this example, we toggle the <code>[Play]</code>
 </span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="p">}</span>
 </span></code></pre></div>
 <h2 id="define-knob-callback">Define Knob Callback</h2>
-<p>The knob callback takes 2 arguments and returns nothing.  The first argument is the index
-of the knob and the second is it's value.  In this example, we send a MIDI CC message
+<p>The knob callback takes 2 arguments and returns nothing. The first argument is the index
+of the knob and the second is it's value. In this example, we send a MIDI CC message
 on channel 1, with CC number equal to knob index and CC value equal to half knob value.
-The panel MCU sends 8 bit unsigned values in the range 0...255 for knobs, so we right shift 
-by 1 for MIDI CC values.<br />
+The panel MCU sends 8 bit unsigned values in the range 0...255 for knobs, so we right shift
+by 1 for MIDI CC values.</p>
 <div class="language-c highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">_knob_callback</span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">index</span><span class="p">,</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">value</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span><span class="n">ft_send_cc</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">index</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
 </span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="p">}</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <h2 id="define-button-callback">Define Button Callback</h2>
 <p>The button callback prototype is similar to the knob callback.
 It takes 2 arguments, button index and button state, and returns nothing.
-In this example, we parse the button index and test the button state. 
-When the <code>[Play]</code> button is depressed we set a flag to toggle it's LED. 
+In this example, we parse the button index and test the button state.
+When the <code>[Play]</code> button is depressed we set a flag to toggle it's LED.
 We ignore when the <code>[Play]</code> button is released.</p>
 <div class="language-c highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">_button_callback</span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">index</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">state</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span><span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="n">index</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 </span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>
 </span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="no">BUTTON_PLAY</span><span class="p">:</span>
-</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">state</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">        </span><span class="n">g_toggle_led</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
-</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">    </span><span class="p">}</span>
-</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">        </span><span class="k">break</span><span class="p">;</span>
-</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="w">    </span><span class="p">}</span>
-</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="p">}</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">state</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">            </span><span class="n">g_toggle_led</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="w">        </span><span class="k">break</span><span class="p">;</span>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="w">    </span><span class="k">default</span><span class="o">:</span>
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="w">        </span><span class="k">break</span><span class="p">;</span>
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="p">}</span>
 </span></code></pre></div>
 <h2 id="build-and-run-the-application">Build and Run the Application</h2>
 <p>Build the application by passing <code>midi-knob</code> to <code>make</code> in the <code>APP</code> environment variable:</p>
@@ -752,9 +756,9 @@ Pressing the <code>[Play]</code> button should toggle it's LED.</p>
 <p>Try sending CC messages for button events.</p>
 <p>Try sending note messages for trigger pad input.</p>
 <h2 id="next-steps">Next Steps</h2>
-<p>In the next tutorial, we will integrate an external library for GUI management.</p>
+<p>In the <a href="../display/">next example</a>, we will see how to use the display.</p>
 <h2 id="midi-knobc"><code>midi-knob.c</code></h2>
-<div class="language-c highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1">// Freetribe: midi-knob </span>
+<div class="language-c highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1">// Freetribe: midi-knob</span>
 </span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="c1">// License: AGPL-3.0-or-later</span>
 </span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
 </span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="cm">/*----- Includes -----------------------------------------------------*/</span>
@@ -763,7 +767,7 @@ Pressing the <code>[Play]</code> button should toggle it's LED.</p>
 </span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>
 </span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="cm">/*----- Macros and Definitions ---------------------------------------*/</span>
 </span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>
-</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="cp">#define BUTTON_PLAY 0xa</span>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="cp">#define BUTTON_PLAY 0x2</span>
 </span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>
 </span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="cm">/*----- Static variable definitions ----------------------------------*/</span>
 </span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a>
@@ -773,13 +777,13 @@ Pressing the <code>[Play]</code> button should toggle it's LED.</p>
 </span><span id="__span-7-17"><a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a>
 </span><span id="__span-7-18"><a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a><span class="cm">/*----- Static function prototypes -----------------------------------*/</span>
 </span><span id="__span-7-19"><a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a>
-</span><span id="__span-7-20"><a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a><span class="kt">void</span><span class="w"> </span><span class="nf">_knob_callback</span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">index</span><span class="p">,</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">value</span><span class="p">);</span><span class="w"> </span>
-</span><span id="__span-7-21"><a id="__codelineno-7-21" name="__codelineno-7-21" href="#__codelineno-7-21"></a><span class="kt">void</span><span class="w"> </span><span class="nf">_button_callback</span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">index</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">state</span><span class="p">);</span><span class="w"> </span>
+</span><span id="__span-7-20"><a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a><span class="kt">void</span><span class="w"> </span><span class="nf">_knob_callback</span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">index</span><span class="p">,</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">value</span><span class="p">);</span>
+</span><span id="__span-7-21"><a id="__codelineno-7-21" name="__codelineno-7-21" href="#__codelineno-7-21"></a><span class="kt">void</span><span class="w"> </span><span class="nf">_button_callback</span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">index</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">state</span><span class="p">);</span>
 </span><span id="__span-7-22"><a id="__codelineno-7-22" name="__codelineno-7-22" href="#__codelineno-7-22"></a>
 </span><span id="__span-7-23"><a id="__codelineno-7-23" name="__codelineno-7-23" href="#__codelineno-7-23"></a><span class="cm">/*----- Extern function implementations ------------------------------*/</span>
 </span><span id="__span-7-24"><a id="__codelineno-7-24" name="__codelineno-7-24" href="#__codelineno-7-24"></a>
 </span><span id="__span-7-25"><a id="__codelineno-7-25" name="__codelineno-7-25" href="#__codelineno-7-25"></a><span class="cm">/**</span>
-</span><span id="__span-7-26"><a id="__codelineno-7-26" name="__codelineno-7-26" href="#__codelineno-7-26"></a><span class="cm"> * @brief   Initialise application. </span>
+</span><span id="__span-7-26"><a id="__codelineno-7-26" name="__codelineno-7-26" href="#__codelineno-7-26"></a><span class="cm"> * @brief   Initialise application.</span>
 </span><span id="__span-7-27"><a id="__codelineno-7-27" name="__codelineno-7-27" href="#__codelineno-7-27"></a><span class="cm"> */</span>
 </span><span id="__span-7-28"><a id="__codelineno-7-28" name="__codelineno-7-28" href="#__codelineno-7-28"></a><span class="n">t_status</span><span class="w"> </span><span class="nf">app_init</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 </span><span id="__span-7-29"><a id="__codelineno-7-29" name="__codelineno-7-29" href="#__codelineno-7-29"></a>
@@ -822,14 +826,19 @@ Pressing the <code>[Play]</code> button should toggle it's LED.</p>
 </span><span id="__span-7-66"><a id="__codelineno-7-66" name="__codelineno-7-66" href="#__codelineno-7-66"></a><span class="w">    </span><span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="n">index</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 </span><span id="__span-7-67"><a id="__codelineno-7-67" name="__codelineno-7-67" href="#__codelineno-7-67"></a>
 </span><span id="__span-7-68"><a id="__codelineno-7-68" name="__codelineno-7-68" href="#__codelineno-7-68"></a><span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="no">BUTTON_PLAY</span><span class="p">:</span>
-</span><span id="__span-7-69"><a id="__codelineno-7-69" name="__codelineno-7-69" href="#__codelineno-7-69"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">state</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-7-70"><a id="__codelineno-7-70" name="__codelineno-7-70" href="#__codelineno-7-70"></a><span class="w">        </span><span class="n">g_toggle_led</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
-</span><span id="__span-7-71"><a id="__codelineno-7-71" name="__codelineno-7-71" href="#__codelineno-7-71"></a><span class="w">    </span><span class="p">}</span>
-</span><span id="__span-7-72"><a id="__codelineno-7-72" name="__codelineno-7-72" href="#__codelineno-7-72"></a><span class="w">        </span><span class="k">break</span><span class="p">;</span>
-</span><span id="__span-7-73"><a id="__codelineno-7-73" name="__codelineno-7-73" href="#__codelineno-7-73"></a><span class="w">    </span><span class="p">}</span>
-</span><span id="__span-7-74"><a id="__codelineno-7-74" name="__codelineno-7-74" href="#__codelineno-7-74"></a><span class="p">}</span>
-</span><span id="__span-7-75"><a id="__codelineno-7-75" name="__codelineno-7-75" href="#__codelineno-7-75"></a>
-</span><span id="__span-7-76"><a id="__codelineno-7-76" name="__codelineno-7-76" href="#__codelineno-7-76"></a><span class="cm">/*----- End of file --------------------------------------------------*/</span>
+</span><span id="__span-7-69"><a id="__codelineno-7-69" name="__codelineno-7-69" href="#__codelineno-7-69"></a>
+</span><span id="__span-7-70"><a id="__codelineno-7-70" name="__codelineno-7-70" href="#__codelineno-7-70"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">state</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-7-71"><a id="__codelineno-7-71" name="__codelineno-7-71" href="#__codelineno-7-71"></a><span class="w">            </span><span class="n">g_toggle_led</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
+</span><span id="__span-7-72"><a id="__codelineno-7-72" name="__codelineno-7-72" href="#__codelineno-7-72"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-7-73"><a id="__codelineno-7-73" name="__codelineno-7-73" href="#__codelineno-7-73"></a><span class="w">        </span><span class="k">break</span><span class="p">;</span>
+</span><span id="__span-7-74"><a id="__codelineno-7-74" name="__codelineno-7-74" href="#__codelineno-7-74"></a>
+</span><span id="__span-7-75"><a id="__codelineno-7-75" name="__codelineno-7-75" href="#__codelineno-7-75"></a><span class="w">    </span><span class="k">default</span><span class="o">:</span>
+</span><span id="__span-7-76"><a id="__codelineno-7-76" name="__codelineno-7-76" href="#__codelineno-7-76"></a><span class="w">        </span><span class="k">break</span><span class="p">;</span>
+</span><span id="__span-7-77"><a id="__codelineno-7-77" name="__codelineno-7-77" href="#__codelineno-7-77"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-7-78"><a id="__codelineno-7-78" name="__codelineno-7-78" href="#__codelineno-7-78"></a>
+</span><span id="__span-7-79"><a id="__codelineno-7-79" name="__codelineno-7-79" href="#__codelineno-7-79"></a><span class="p">}</span>
+</span><span id="__span-7-80"><a id="__codelineno-7-80" name="__codelineno-7-80" href="#__codelineno-7-80"></a>
+</span><span id="__span-7-81"><a id="__codelineno-7-81" name="__codelineno-7-81" href="#__codelineno-7-81"></a><span class="cm">/*----- End of file --------------------------------------------------*/</span>
 </span></code></pre></div>
 
 
