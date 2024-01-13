@@ -191,13 +191,9 @@ void _button_callback(uint8_t index, bool state) {
     switch (index) {
 
     case BUTTON_PLAY:
-
         if (state == 1) {
-            g_toggle_led == true;
+            g_toggle_led = true;
         }
-        break;
-
-    default:
         break;
     }
 
