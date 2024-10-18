@@ -2,15 +2,16 @@
 
 ## Create Application Files
 
-```
+```bash
 mkdir cpu/src/apps/put-pixel
 cp template_app.c cpu/src/apps/blink-tick/put-pixel.c
 ```
 
 ## Initialise Application
 
-In the `app_init()` function we register a callback for trigger pad events and set the trigger mode to continuous.
-We will use the data from the first trigger pad to print a line to the display.
+In the `app_init()` function we register a callback for trigger pad events and
+set the trigger mode to continuous. We will use the data from the first trigger
+pad to print a line to the display.
 
 ```c
 t_status app_init(void) {
@@ -26,8 +27,8 @@ t_status app_init(void) {
 
 ## Define Run Behaviour
 
-Our `app_run()` function, we print a line to the display.
-The length of the line will be relative to the pressure on the first trigger pad.
+Our `app_run()` function, we print a line to the display. The length of the line
+will be relative to the pressure on the first trigger pad.
 
 ```c
 void app_run(void) {
@@ -52,9 +53,10 @@ void app_run(void) {
 
 ## Define Callback
 
-In our trigger pad callback, we store the pad pressure value in a static global variable.
-The trigger callback takes 3 arguments, pad index, pad velocity and pad state.
-In continuous mode, the callback will be executed every time the pressure on the pad changes.
+In our trigger pad callback, we store the pad pressure value in a static global
+variable. The trigger callback takes 3 arguments, pad index, pad velocity and
+pad state. In continuous mode, the callback will be executed every time the
+pressure on the pad changes.
 
 ```c
 static void _trigger_callback(uint8_t pad, uint8_t vel, bool state) {
@@ -73,24 +75,25 @@ static void _trigger_callback(uint8_t pad, uint8_t vel, bool state) {
 
 ## Build and Run the Application
 
-Build the application by passing `put-pixel` to `make`
-in the `APP` environment variable:
+Build the application by passing `put-pixel` to `make` in the `APP` environment
+variable:
 
-```
+```bash
 make clean && make APP=put-pixel
 ```
 
 Then run the application using GDB:
 
-```
+```bash
 cd cpu && arm-none-eabi-gdb
 ```
 
-The commands in `cpu/.gdbinit` should take care of
-attaching to the debugger's GDB server and loading the ELF.
+The commands in `cpu/.gdbinit` should take care of attaching to the debugger's
+GDB server and loading the ELF.
 
-If all is well, pushing on the first trigger pad should draw a line across the screen.
-The lenbgth of the line should change relative to the pressure on the pad.
+If all is well, pushing on the first trigger pad should draw a line across the
+screen. The length of the line should change relative to the pressure on the
+pad.
 
 ## `example.c`
 
