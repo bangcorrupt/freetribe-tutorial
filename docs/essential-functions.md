@@ -13,8 +13,8 @@ Create a directory for the app and a file for the code. The app directory must
 be under the `freetribe/cpu/src/apps/` directory for the build system to work.
 
 ```bash
-mkdir cpu/src/apps/blink
-touch cpu/src/apps/blink.c
+mkdir cpu/src/apps/my-blink
+touch cpu/src/apps/my_blink.c
 ```
 
 ## Include Freetribe API
@@ -89,7 +89,7 @@ pass the name of our application directory (not the path) in the `APP`
 environment variable.
 
 ```bash
-make clean && make APP=blink
+make clean && make APP=my-blink
 ```
 
 ## Run the Application
