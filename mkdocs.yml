@@ -1,17 +1,23 @@
 site_name: Freetribe Tutorial
 site_url: https://bangcorrupt.github.io/freetribe-tutorial
-site_description: Tutorial for Freetribe, a free, open-source firmware for Electribe 2.
+site_description:
+  Tutorial for Freetribe, a free, open-source firmware for Electribe 2.
 repo_url: https://github.com/bangcorrupt/freetribe-tutorial
 repo_name: bangcorrupt/freetribe-tutorial
 
 nav:
   - index.md
   - Examples:
-    - "00: Essential Functions": essential-functions.md
-    - "01: Registering Callbacks": registering-callbacks.md
-    - "02: User Input": user-input.md
+      - "00: Essential Functions": essential-functions.md
+      - "01: Registering Callbacks": registering-callbacks.md
+      - "02: User Input": user-input.md
   - support.md
   - license.md
+
+draft_docs: |
+  template-example.md
+  going-further.md
+  display-output.md
 
 plugins:
   - search
@@ -58,5 +64,6 @@ markdown_extensions:
   - pymdownx.snippets
   - pymdownx.superfences
 
-
-copyright: Freetribe Tutorial &copy; 2024 by bangcorrupt is licensed under CC BY-NC-SA 4.0
+copyright:
+  Freetribe Tutorial &copy; 2024 by bangcorrupt is licensed under CC BY-NC-SA
+  4.0
