@@ -1,19 +1,20 @@
 # User Input
 
-In the [previous example](registering-callbacks.md) we registered a callback for tick events.
-In this example, we will register callbacks for knob and button input,
-then use them to send MIDI CC messages and toggle an LED.
+In the [previous example](registering-callbacks.md) we registered a callback for
+tick events. In this example, we will register callbacks for knob and button
+input, then use them to send MIDI CC messages and toggle an LED.
 
 ## Create Application Files
 
-```
-mkdir cpu/src/apps/midi-knob
-cp template_app.c cpu/src/apps/blink-tick/midi-knob.c
+```bash
+mkdir cpu/src/apps/my-midi-knob
+cp template_app.c cpu/src/apps/my-midi-knob/my_midi_knob.c
 ```
 
 ## Initialise Application
 
-In the `app_init()` function, we register callbacks for knob and button input events.
+In the `app_init()` function, we register callbacks for knob and button input
+events.
 
 ```c
 t_status app_init(void) {
@@ -30,9 +31,10 @@ t_status app_init(void) {
 
 ## Define Run Behaviour
 
-Our `app_run()` function is very similar to the [previous example](registering-callbacks.md).
-If a flag is set, we toggle an LED and clear the flag. The flag will be set
-in our button callback below. In this example, we toggle the `[Play]` button LED.
+Our `app_run()` function is very similar to the
+[previous example](registering-callbacks.md). If a flag is set, we toggle an LED
+and clear the flag. The flag will be set in our button callback below. In this
+example, we toggle the `[Play]` button LED.
 
 ```c
 void app_run(void) {
@@ -47,11 +49,11 @@ void app_run(void) {
 
 ## Define Knob Callback
 
-The knob callback takes 2 arguments and returns nothing. The first argument is the index
-of the knob and the second is it's value. In this example, we send a MIDI CC message
-on channel 1, with CC number equal to knob index and CC value equal to half knob value.
-The panel MCU sends 8 bit unsigned values in the range 0...255 for knobs, so we right shift
-by 1 for MIDI CC values.
+The knob callback takes 2 arguments and returns nothing. The first argument is
+the index of the knob and the second is it's value. In this example, we send a
+MIDI CC message on channel 1, with CC number equal to knob index and CC value
+equal to half knob value. The panel MCU sends 8 bit unsigned values in the range
+0...255 for knobs, so we right shift by 1 for MIDI CC values.
 
 ```c
 
@@ -64,11 +66,11 @@ void _knob_callback(uint8_t index, uint8_t value) {
 
 ## Define Button Callback
 
-The button callback prototype is similar to the knob callback.
-It takes 2 arguments, button index and button state, and returns nothing.
-In this example, we parse the button index and test the button state.
-When the `[Play]` button is depressed we set a flag to toggle it's LED.
-We ignore when the `[Play]` button is released.
+The button callback prototype is similar to the knob callback. It takes 2
+arguments, button index and button state, and returns nothing. In this example,
+we parse the button index and test the button state. When the `[Play]` button is
+depressed we set a flag to toggle it's LED. We ignore when the `[Play]` button
+is released.
 
 ```c
 void _button_callback(uint8_t index, bool state) {
@@ -90,23 +92,24 @@ void _button_callback(uint8_t index, bool state) {
 
 ## Build and Run the Application
 
-Build the application by passing `midi-knob` to `make` in the `APP` environment variable:
+Build the application by passing `midi-knob` to `make` in the `APP` environment
+variable:
 
-```
-make clean && make APP=midi-knob
+```bash
+make clean && make APP=my-midi-knob
 ```
 
 Then run the application using GDB:
 
-```
+```bash
 cd cpu && arm-none-eabi-gdb
 ```
 
-The commands in `cpu/.gdbinit` should take care of
-attaching to the debugger's GDB server and loading the ELF.
+The commands in `cpu/.gdbinit` should take care of attaching to the debugger's
+GDB server and loading the ELF.
 
-If all is well, moving any of the knobs should send MIDI CC messages.
-Pressing the `[Play]` button should toggle it's LED.
+If all is well, moving any of the knobs should send MIDI CC messages. Pressing
+the `[Play]` button should toggle it's LED.
 
 ## Things to Try
 
@@ -196,7 +199,6 @@ void _button_callback(uint8_t index, bool state) {
         }
         break;
     }
-
 }
 
 /*----- End of file --------------------------------------------------*/
