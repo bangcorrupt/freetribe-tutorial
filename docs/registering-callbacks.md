@@ -11,7 +11,7 @@ directory for our app and copy `template_app.c` to a file with our app name:
 
 ```bash
 mkdir cpu/src/apps/my-blink-tick
-cp template_app.c cpu/src/apps/blink-tick/my_blink_tick.c
+cp template_app.c cpu/src/apps/my-blink-tick/my_blink_tick.c
 ```
 
 ## Initialise Application
@@ -101,8 +101,7 @@ If all is well, you should see the `[Tap]` LED toggle once per second.
 ## Things to Try
 
 Repeat the tasks from the [previous example](essential-functions.md), toggling
-different LEDs at different rates. It may help to use separate timeout values in
-the tick callback.
+different LEDs at different rates.
 
 ## Next Steps
 
@@ -168,13 +167,10 @@ static void _tick_callback(void) {
 
     static uint16_t led_count;
 
-    if (led_count >= LED_TICK_DIV) {
+    if (led_count++ >= LED_TICK_DIV) {
 
         g_toggle_led = true;
         led_count = 0;
-
-    } else {
-        led_count++;
     }
 }
 
