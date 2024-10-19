@@ -3,8 +3,8 @@
 ## Create Application Files
 
 ```bash
-mkdir cpu/src/apps/put-pixel
-cp template_app.c cpu/src/apps/blink-tick/put-pixel.c
+mkdir cpu/src/apps/my-put-pixel
+cp template_app.c cpu/src/apps/my-put-pixel/my_put_pixel.c
 ```
 
 ## Initialise Application
@@ -27,26 +27,28 @@ t_status app_init(void) {
 
 ## Define Run Behaviour
 
-Our `app_run()` function, we print a line to the display. The length of the line
-will be relative to the pressure on the first trigger pad.
+In our `app_run()` function, we print a line to the display. The length of the
+line will be relative to the pressure on the first trigger pad.
 
 ```c
 void app_run(void) {
 
     bool pixel_state = 0;
-    uint8_t y_coord = 32;
+    uint8_t y_pos = 32;
 
-    uint8_t i;
+    uint8_t x_pos;
 
-    for (i=0; i < 128; i++;) {
+    for (x_pos=0; x_pos < 128; x_pos++;) {
 
-        if (i <= g_pad_pressure) {
-            state = 1;
+        if (x_pos <= g_pad_pressure) {
+
+            pixel_state = 1;
+
         } else {
-            state = 0;
+            pixel_state = 0;
         }
 
-        ft_put_pixel(i, y_coord, state)
+        ft_put_pixel(x_pos, y_pos, pixel_state)
     }
 }
 ```
@@ -75,11 +77,11 @@ static void _trigger_callback(uint8_t pad, uint8_t vel, bool state) {
 
 ## Build and Run the Application
 
-Build the application by passing `put-pixel` to `make` in the `APP` environment
-variable:
+Build the application by passing `my-put-pixel` to `make` in the `APP`
+environment variable:
 
 ```bash
-make clean && make APP=put-pixel
+make clean && make APP=my-put-pixel
 ```
 
 Then run the application using GDB:
@@ -98,7 +100,7 @@ pad.
 ## `example.c`
 
 ```c
-// Freetribe: blink-tick
+// Freetribe: put-pixel
 // License: AGPL-3.0-or-later
 
 /*----- Includes -----------------------------------------------------*/
