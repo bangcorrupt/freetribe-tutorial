@@ -80,11 +80,11 @@ static void _tick_callback(void) {
 
 ## Build and Run the Application
 
-Build the application by passing `blink-tick` to `make` in the `APP` environment
-variable:
+Build the application by passing `my-blink-tick` to `make` in the `APP`
+environment variable:
 
 ```bash
-make clean && make APP=blink-tick
+make clean && make APP=my-blink-tick
 ```
 
 Then run the application using GDB:
