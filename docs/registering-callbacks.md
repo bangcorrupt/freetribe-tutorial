@@ -25,11 +25,15 @@ pass the name of a function, `_tick_callback`, as the second argument. We will
 define this function in a later step.
 
 ```c
+
+#define USER_TICK_DIV 0   // User tick for every systick (~1ms).
+#define LED_TICK_DIV 500 // LED tick per 500 user ticks (~0.5s).
+
 t_status app_init(void) {
 
     t_status status = ERROR;
 
-    ft_register_tick_callback(0, _tick_callback);
+    ft_register_tick_callback(USER_TICK_DIV, _tick_callback);
 
     status = SUCCESS;
     return status;
@@ -57,23 +61,20 @@ void app_run(void) {
 ## Define Tick Callback
 
 In our tick callback, we count the number of ticks and set a flag each time we
-reach 1000. We test and clear this flag in the `app_run()` function, toggling
-the LED once per second. The tick callback takes no arguments and returns
-nothing. It is important that the function prototype matches this form, as
-defined in the Freetribe API.
+reach 500. We test and clear this flag in the `app_run()` function, toggling the
+LED twice per second. The tick callback takes no arguments and returns nothing.
+It is important that the function prototype matches this form, as defined in the
+Freetribe API.
 
 ```c
 static void _tick_callback(void) {
 
     static uint16_t led_count;
 
-    if (led_count >= 1000) {
+    if (led_count++ >= LED_TICK_DIV) {
 
         g_toggle_led = true;
         led_count = 0;
-
-    } else {
-        led_count++;
     }
 }
 ```
