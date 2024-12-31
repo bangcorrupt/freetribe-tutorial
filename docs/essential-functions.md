@@ -14,7 +14,7 @@ be under the `freetribe/cpu/src/apps/` directory for the build system to work.
 
 ```bash
 mkdir cpu/src/apps/my-blink
-touch cpu/src/apps/my_blink.c
+touch cpu/src/apps/my-blink/my_blink.c
 ```
 
 ## Include Freetribe API
